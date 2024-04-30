@@ -45,8 +45,3 @@ const expensesRoute = new Hono()
   });
 
 export default expensesRoute;
-
-/* 
-I don't know if you've already reviewed 
-VoidPet but it's great, also developed with Expo
-*/
