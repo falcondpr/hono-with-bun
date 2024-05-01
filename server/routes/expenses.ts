@@ -33,6 +33,10 @@ const expensesRoute = new Hono()
     if (!expense) return c.notFound();
     return c.json({ expense });
   })
+  .get("/total-spent", (c) => {
+    const total = fakeExpenses.reduce((a, b) => a + b.amount, 0);
+    return c.json({ total });
+  })
   .delete("/:id{[0-9]+}", (c) => {
     const id = Number.parseInt(c.req.param("id"));
     const index = fakeExpenses.findIndex(
