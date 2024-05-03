@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "./lib/api";
+import { api } from "@/lib/api";
 
 async function getTotalSpents() {
   const res = await api.expenses["total-spent"].$get();
@@ -17,7 +18,11 @@ async function getTotalSpents() {
   return data;
 }
 
-const App: React.FC = () => {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const {
     data: totalSpent,
     isPending,
@@ -31,10 +36,8 @@ const App: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h3 className="text-foreground">hello world</h3>
-
       <div className="flex flex-col">
-        <Button>Click me</Button>
+        {/* <Button>Click me</Button> */}
 
         <Card className="mt-5">
           <CardHeader>
@@ -50,6 +53,4 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default App;
+}
