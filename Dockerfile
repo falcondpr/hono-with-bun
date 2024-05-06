@@ -24,7 +24,7 @@ RUN apt-get update -qq && \
 COPY --link bun.lockb package.json ./
 RUN bun install --ci
 
-COPY --link client/bun.lockb frontend client/package.json ./client/
+COPY --link client/bun.lockb client/package.json ./client/
 RUN cd client && bun install --ci
 
 # Copy application code
