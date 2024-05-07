@@ -7,7 +7,9 @@ import { Label } from "@/components/ui/label";
 
 import { api } from "@/lib/api";
 
-export const Route = createFileRoute("/create-expenses")({
+export const Route = createFileRoute(
+  "/_authenticated/create-expenses"
+)({
   component: CreateExpenses,
 });
 
@@ -27,7 +29,7 @@ function CreateExpenses() {
   });
 
   return (
-    <div className="p-5">
+    <div className="py-5">
       <h2>Create Expense</h2>
 
       <form

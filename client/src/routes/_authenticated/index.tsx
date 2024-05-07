@@ -18,7 +18,7 @@ async function getTotalSpents() {
   return data;
 }
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/")({
   component: Index,
 });
 
@@ -35,7 +35,7 @@ function Index() {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-2xl mx-auto">
       <div className="flex flex-col">
         {/* <Button>Click me</Button> */}
 

@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { api } from "@/lib/api";
 
-export const Route = createFileRoute("/expenses")({
+export const Route = createFileRoute("/_authenticated/expenses")({
   component: Expenses,
 });
 

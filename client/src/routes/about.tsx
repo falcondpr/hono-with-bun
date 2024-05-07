@@ -6,7 +6,7 @@ export const Route = createFileRoute("/about")({
 
 function Index() {
   return (
-    <div className="p-2">
+    <div className="py-5">
       <h3>Welcome About!</h3>
     </div>
   );
