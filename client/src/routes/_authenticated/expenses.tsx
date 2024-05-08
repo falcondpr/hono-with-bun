@@ -20,6 +20,13 @@ export const Route = createFileRoute("/_authenticated/expenses")({
 });
 
 async function getTotalSpents() {
+  const res = await api.expenses["total-spent"].$get();
+  if (!res.ok) throw new Error("Server error");
+  const data = await res.json();
+  return data;
+}
+
+async function getAllSpents() {
   const res = await api.expenses.$get();
   if (!res.ok) throw new Error("Server error");
   const data = await res.json();
@@ -33,10 +40,21 @@ function Expenses() {
     error,
   } = useQuery({
     queryKey: ["get-all-expenses"],
+    queryFn: getAllSpents,
+  });
+
+  const {
+    data: totalSpent,
+    isPending: isPendingTotalSpent,
+    error: errorTotalSpent,
+  } = useQuery({
+    queryKey: ["get-total-spent"],
     queryFn: getTotalSpents,
   });
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "An error has occurred: " + error?.message;
+  if (errorTotalSpent)
+    return "An error has occurred: " + errorTotalSpent.message;
 
   return (
     <div className="py-5 max-w-2xl mx-auto">
@@ -83,7 +101,9 @@ function Expenses() {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">
+              {isPendingTotalSpent ? "..." : totalSpent.result.total}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
