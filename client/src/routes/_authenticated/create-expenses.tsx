@@ -1,11 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { api } from "@/lib/api";
+import { createExpenseSchema } from "@server/shared-types";
 
 export const Route = createFileRoute(
   "/_authenticated/create-expenses"
@@ -17,6 +19,7 @@ function CreateExpenses() {
   const navigate = useNavigate();
 
   const form = useForm({
+    validatorAdapter: zodValidator,
     defaultValues: {
       title: "",
       amount: "0",
@@ -42,6 +45,9 @@ function CreateExpenses() {
       >
         <form.Field
           name="title"
+          validators={{
+            onChange: createExpenseSchema.shape.title,
+          }}
           children={(field) => (
             <>
               <Label htmlFor={field.name}>Title</Label>
@@ -61,6 +67,9 @@ function CreateExpenses() {
 
         <form.Field
           name="amount"
+          validators={{
+            onChange: createExpenseSchema.shape.amount,
+          }}
           children={(field) => (
             <>
               <Label htmlFor="amount">Amount</Label>

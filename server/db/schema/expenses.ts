@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import {
   index,
   numeric,
@@ -29,3 +31,14 @@ export const expenses = pgTable(
     };
   }
 );
+
+export const insertExpenserSchema = createInsertSchema(expenses, {
+  title: z
+    .string()
+    .min(3, { message: "Title must be at least 3 characters" })
+    .max(100, { message: "Title must be at most 100 characters" }),
+  amount: z.string().regex(/^\d+(\.\d{1,2})?$/, {
+    message: "Amount must be positive",
+  }),
+});
+export const selectExpenseSchema = createSelectSchema(expenses);
